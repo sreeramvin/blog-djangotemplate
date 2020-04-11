@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ARTICLE LIST</title>
+    <link rel="stylesheet" href="{% static 'article/style.css' %}">
+    
+</head>
+<body>
+    <header class="wrapper">
+    <h1> <a href="{% url 'home' %}"><img src="{% static 'article/logos.png' %}" alt="djang"/> </a></h1>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+          <li>
+            <form class="logout" action="{% url 'accounts:logout' %}" method="POST">
+              {% csrf_token %}
+              <button type="submit">LOGOUT</button>
+            </form>
+          </li>
+          <li><a href="{% url 'article:create' %}" class="highlight">NEW ARTICLE</a></li>
+          {% else %}
+          <li><a href="{% url 'accounts:login' %}">LOGIN</a></li>
+          <li><a href="{% url 'accounts:signup' %}">SIGNUP</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <div class="wrapper">
+      {% block content %}
+      {% endblock %}
+    </div>
+</body>
+</html>
